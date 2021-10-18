@@ -1,14 +1,9 @@
 const router = require("express").Router();
 
-const User = require("../model/user");
+const usersController = require("../controllers/users");
 
 
-router.get("/", (req, res, next) => {
-
-    User.find()
-        .then(users =>  res.json(users))
-        .catch(err => res.status(400).json(`Error: ${err}`));
-});
+router.get("/", usersController.getUsers);
 
 
 module.exports = router;
