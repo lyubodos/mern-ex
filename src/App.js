@@ -1,10 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import {BrowserRouter as Router, Route} from "react-router-dom";
-import CreateUser from "./components/CreateUser";
-import ExerciseList from './components/ExerciseList';
-import Header from "./components/Header";
 
+import Header from "./components/Header";
+import CreateExercise from "./components/CreateExercise";
+import ExerciseList from "./components/ExerciseList"
+import CreateUser from "./components/CreateUser";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
 
         <Route path="/" exact component={ExerciseList}/>
         <Route path="/user" component={CreateUser}/>
+        <Route path="/create" component={CreateExercise}/>
       </Router>
     </div>
   );
