@@ -14,7 +14,7 @@ export default class ExerciseList extends Component {
 
 
     exercisesList(){
-        return this.state = exercises.join("");
+        return this.state.exercises.join("");
     }
 
     render() {
