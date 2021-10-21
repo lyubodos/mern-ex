@@ -30,7 +30,17 @@ const addExercise = (req, res, next) => {
 };
 
 
+const removeExercise = (req, res, next) => {
+
+    const exId = req.params.id;
+
+    Exercise.findByIdAndDelete(exId)
+        .then(result => console.log("Exercise deleted"))
+        .catch(err => res.status(400).json(`Error: ${err}`));
+};
+
 module.exports = {
     getExercises,
-    addExercise
-}
+    addExercise,
+    removeExercise
+};
