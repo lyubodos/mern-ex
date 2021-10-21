@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 
 
@@ -13,16 +14,25 @@ export default class CreateUser extends Component {
         }
     };
 
+
     onChangeUsername(e){
         this.setState({username: e.target.value });
-    }
+    };
 
     onSubmit(e){
         e.preventDefault();
 
-        console.log(`User added: ${this.state.username}!`);
-    
-    }
+        const username = {
+            username: this.state.username
+        };
+
+      axios.post("http://localhost:4000/users/add", username)
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+
+
+    };
+
 
     render() {  
         return (
