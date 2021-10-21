@@ -1,36 +1,90 @@
+import axios from 'axios';
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+
+
+
+const Exercise = props => {
+
+    return (
+        <tr>
+            <td>{props.exercise.username}</td>
+            <td>{props.exercise.description}</td>
+            <td>{props.exercise.duration}</td>
+            <td>{props.exercise.date.substring(0, 10)}</td>
+            <td>
+                <Link to={`/edit/${props.exercise._id}`}>Edit</Link> |  
+                 <a href="#" onClick={() => {
+                    props.deleteExercise(props.exercise._id)
+                }}>Delete</a>
+
+            </td>
+        </tr>
+    )
+}
 
 
 export default class ExerciseList extends Component {
-    constructor(props){
-
+    constructor(props) {
         super(props);
+
+        this.deleteExer = this.deleteExer.bind(this);
+
 
         this.state = {
             exercises: []
         }
     };
 
+    componentDidMount() {
 
-    exercisesList(){
-        return this.state.exercises.join("");
-    }
+        axios.get("http://localhost:4000/exercises")
+            .then(res => {
+                this.setState({
+                    exercises: res.data
+                })
+            })
+            .catch(err => console.log(err));
+    };
+
+
+    deleteExer(id){
+
+        axios.delete(`http://localhost/exercises/${id}`)
+            .then(res => {
+                this.setState({
+                    exercises: res.data.filter(exer => exer._id !==  id)
+                })
+            })
+            .catch(err => console.log(err));
+
+        
+        window.location = "/";
+    };
+
+
+    exerciseList() {
+       return this.state.exercises.map(ex => {
+            return <Exercise exercise={ex} deleteExercise={this.deleteExer} key={ex._id} />
+        });
+    };
 
     render() {
         return (
             <div>
-                <h2>Logged Exercises:</h2>
+                <h3>Logged Exercises</h3>
                 <table className="table">
-                    <thead className="table-light"> 
-                        <tr>Username</tr>
-                        <tr>Description</tr>
-                        <tr>Duration</tr>
-                        <tr>Date</tr>
-                        <tr>Actions</tr>
+                    <thead className="thead-light">
+                        <tr>
+                            <th>Username</th>
+                            <th>Description</th>
+                            <th>Duration</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        {this.exercisesList()}
+                        {this.exerciseList()}
                     </tbody>
                 </table>
             </div>
