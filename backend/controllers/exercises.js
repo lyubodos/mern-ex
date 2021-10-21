@@ -14,7 +14,7 @@ const addExercise = (req, res, next) => {
     const username = req.body.username;
     const description = req.body.description;
     const duration = req.body.duration;
-    const date = Date.parse(req.body.date);
+    const date = req.body.date;
 
     const newEx = new Exercise({
         username: username,
