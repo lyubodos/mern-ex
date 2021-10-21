@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,9 +18,25 @@ export default class CreateExercise extends Component {
             description: "",
             duration: 0,
             date: new Date(),
-            users: ["Denica", "Lyubo"]
+            users: []
         }
     };
+
+    componentDidMount() {
+        axios.get("http://localhost:4000/users")
+            .then(res => {
+                if (res.data.length > 0) {
+                    res.data.map(user => {
+                        this.setState({
+                            users: res.data.map(user => user.username),
+                            username: res.data[0].username
+                        })
+                    });
+                }
+                return;
+            })
+            .catch(err => console.log(err));
+    }
 
     onChangeUsername(e) {
         this.setState({ username: e.target.value });
@@ -29,27 +46,31 @@ export default class CreateExercise extends Component {
         this.setState({ description: e.target.value });
     };
 
-    onChangeDuration(e){
+    onChangeDuration(e) {
         this.setState({ duration: e.target.value })
     };
 
-    onChangeDate(date){
+    onChangeDate(date) {
         this.setState({ date: date })
     };
 
-    onSubmit(e){
+    onSubmit(e) {
         e.preventDefault();
 
         const exercise = {
             username: this.state.username,
             description: this.state.description,
             duration: this.state.duration,
-            date: Date.parse(this.state.date)
+            date: this.state.date
         }
 
-        console.log(`Exercise created: ${exercise}`);
+        axios.post("http://localhost:4000/exercises/add", exercise)
+            .then(res => res.data())
+            .catch(err => console.log(err));
 
-    }
+        window.location = "/";
+
+    };
 
     render() {
         return (
