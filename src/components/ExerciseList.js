@@ -50,7 +50,7 @@ export default class ExerciseList extends Component {
 
     deleteExer(id){
 
-        axios.delete(`http://localhost/exercises/${id}`)
+        axios.delete(`http://localhost:4000/exercises/${id}`)
             .then(res => {
                 this.setState({
                     exercises: res.data.filter(exer => exer._id !==  id)
@@ -58,7 +58,6 @@ export default class ExerciseList extends Component {
             })
             .catch(err => console.log(err));
 
-        
         window.location = "/";
     };
 
