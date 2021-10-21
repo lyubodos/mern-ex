@@ -31,6 +31,7 @@ export default class CreateUser extends Component {
         .catch(err => console.log(err));
 
 
+        window.location = "/";
     };
 
 

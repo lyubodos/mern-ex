@@ -19,7 +19,7 @@ export default class CreateExercise extends Component {
             duration: 0,
             date: new Date(),
             users: []
-        }
+        };
     };
 
     componentDidMount() {
@@ -110,17 +110,17 @@ export default class CreateExercise extends Component {
                             onChange={this.onChangeDuration} />
                     </div>
                     <div className="form-group">
-                    <label>Date:</label>
-                    <DatePicker
-                    selected={this.state.date}
-                    onChange={this.onChangeDate}
-                    />
+                        <label>Date:</label>
+                        <DatePicker
+                            selected={this.state.date}
+                            onChange={this.onChangeDate}
+                        />
                     </div>
                     <div>
-                        <input type="submit" value="Create Exercise"  className="btn btn-primary"/>
+                        <input type="submit" value="Create Exercise" className="btn btn-primary" />
                     </div>
                 </form>
             </div>
         )
     };
-}
+};
